@@ -234,4 +234,4 @@ Once the Drive is mounted and the data is loaded, run all remaining cells in ord
 
 ---
 
-*MS Artificial Intelligence & Machine Learning | Walsh College | Spring 2026*
+| Walsh College |
