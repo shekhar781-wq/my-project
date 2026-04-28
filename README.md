@@ -32,6 +32,8 @@ This repository contains the complete code, analysis, and findings for my QM640:
 - **Coverage:** UK-based online retailer | 38 countries | ~4,300 unique customers (after cleaning)
 - **Key Variables:** InvoiceNo, StockCode, Description, Quantity, InvoiceDate, UnitPrice, CustomerID, Country
 
+> **Note:** The dataset is loaded from the local Excel file downloaded from the UCI Machine Learning Repository (link above). Download `Online Retail.xlsx` and upload it to your Google Drive before running the notebook.
+
 ---
 
 ## Repository Structure
@@ -123,36 +125,88 @@ Pearson correlation analysis indicates that Order Frequency is most strongly cor
 ## Technologies Used
 
 - **Language:** Python 3.x
-- **Environment:** Google Colab / Jupyter Notebook
+- **Environment:** Google Colab
 - **Libraries:**
   - Data Processing: `pandas`, `numpy`
   - Visualisation: `matplotlib`, `seaborn`
   - Machine Learning: `scikit-learn` (Logistic Regression, Random Forest, K-Means, StandardScaler)
   - Time Series: `statsmodels` (ARIMA, seasonal decompose), `prophet`
   - Statistics: `scipy`
-  - Dataset Access: `ucimlrepo`
+  - Google Drive Integration: `google.colab` (drive mount)
 
 ---
 
-## How to Run
+## How to Run on Google Colab
 
-1. Clone this repository
-   ```bash
-   git clone https://github.com/shekhar781-wq/my-project.git
-   cd my-project
-   ```
+### Step 1 — Prepare the Dataset
 
-2. Install required packages
-   ```bash
-   pip install pandas numpy matplotlib seaborn scikit-learn statsmodels scipy ucimlrepo prophet
-   ```
+The dataset is sourced from the **UCI Machine Learning Repository – Online Retail Dataset**:
+> URL: https://archive.ics.uci.edu/dataset/352/online+retail
 
-3. Open the notebook
-   ```bash
-   jupyter notebook notebooks/Online_Retail_Dataset.ipynb
-   ```
+Download `Online Retail.xlsx` from the link above and upload it to the **root of your Google Drive** (`My Drive/`).
 
-4. The dataset will be automatically fetched from the UCI ML Repository on first run. If unavailable, place `Online Retail.xlsx` in the `data/raw/` folder and update the file path in the notebook.
+> The dataset contains **541,909 transaction records** across **8 variables** (InvoiceNo, StockCode, Description, Quantity, InvoiceDate, UnitPrice, CustomerID, Country) covering Dec 2010 – Dec 2011.
+
+---
+
+### Step 2 — Open the Notebook in Google Colab
+
+Click the badge below or open the notebook directly:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/shekhar781-wq/my-project/blob/main/notebooks/Online_Retail_Dataset.ipynb)
+
+Alternatively, navigate to [https://colab.research.google.com/](https://colab.research.google.com/), choose **File → Open notebook → GitHub**, and paste:
+```
+https://github.com/shekhar781-wq/my-project
+```
+
+---
+
+### Step 3 — Install Required Packages
+
+Run the following cell at the top of the notebook to install all dependencies:
+
+```python
+!pip install pandas numpy matplotlib seaborn scikit-learn statsmodels scipy prophet
+```
+
+---
+
+### Step 4 — Mount Google Drive and Load the Dataset
+
+The dataset is loaded directly from your Google Drive. Run the following cells at the start of the notebook:
+
+```python
+# Mount Google Drive
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+> When prompted, click the authorisation link, sign in with your Google account, and paste the authorisation code back into the cell.
+
+```python
+import pandas as pd
+
+# Load dataset from Google Drive and copy into working DataFrame
+load_data = pd.read_excel('/content/drive/My Drive/Online Retail.xlsx')
+df = load_data.copy()
+df.head()
+```
+
+> **Note:** If you placed the file in a subfolder, update the path accordingly.  
+> For example: `'/content/drive/My Drive/datasets/Online Retail.xlsx'`
+
+---
+
+### Step 5 — Run All Cells
+
+Once the Drive is mounted and the data is loaded, run all remaining cells in order. The notebook will execute:
+
+- **EDA** — Exploratory data analysis and visualisations
+- **RQ1** — Churn prediction (Logistic Regression, Random Forest, XGBoost + SMOTE)
+- **RQ2** — Customer segmentation (K-Means RFM clustering)
+- **RQ3** — Revenue optimisation (ARIMA, Prophet, Market Basket)
+- **RQ4** — Customer satisfaction analysis (Pearson Correlation, Regression)
 
 ---
 
